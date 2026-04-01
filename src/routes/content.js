@@ -3,7 +3,17 @@ import ContentSection from '../models/ContentSection.js';
 
 const router = express.Router();
 
-// Get all content sections
+// Admin: Get all content (including inactive) - MUST be before /:key route
+router.get('/admin/all', async (req, res) => {
+  try {
+    const content = await ContentSection.find().sort({ page: 1, order: 1 });
+    res.json({ success: true, data: content });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Get all content sections (public)
 router.get('/', async (req, res) => {
   try {
     const { page, section } = req.query;
@@ -19,7 +29,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get content by key
+// Get content by key (public)
 router.get('/:key', async (req, res) => {
   try {
     const content = await ContentSection.findOne({
@@ -77,16 +87,6 @@ router.delete('/admin/:id', async (req, res) => {
     }
 
     res.json({ success: true, message: 'Content deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-// Admin: Get all content (including inactive)
-router.get('/admin/all', async (req, res) => {
-  try {
-    const content = await ContentSection.find().sort({ page: 1, order: 1 });
-    res.json({ success: true, data: content });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

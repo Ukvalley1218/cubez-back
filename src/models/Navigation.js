@@ -46,7 +46,11 @@ const navigationSchema = new mongoose.Schema({
     enum: ['navbar', 'footer'],
     default: 'navbar'
   },
-  items: [navItemSchema],
+  // Use mixed type to support both array (navbar) and object (footer sections)
+  items: {
+    type: mongoose.Schema.Types.Mixed,
+    default: () => ({})
+  },
   updatedAt: {
     type: Date,
     default: Date.now
@@ -56,13 +60,13 @@ const navigationSchema = new mongoose.Schema({
 // Static method to get navbar items
 navigationSchema.statics.getNavbar = async function() {
   const nav = await this.findOne({ location: 'navbar' });
-  return nav?.items || [];
+  return Array.isArray(nav?.items) ? nav.items : [];
 };
 
 // Static method to get footer items
 navigationSchema.statics.getFooter = async function() {
   const footer = await this.findOne({ location: 'footer' });
-  return footer?.items || [];
+  return footer?.items || {};
 };
 
 export default mongoose.model('Navigation', navigationSchema);

@@ -12,7 +12,7 @@ export const getPublicNavigation = async (req, res) => {
       success: true,
       data: {
         navbar: navbar?.items || [],
-        footer: footer?.items || []
+        footer: footer?.items || {}
       }
     });
   } catch (error) {
@@ -45,9 +45,10 @@ export const getNavbar = async (req, res) => {
 export const getFooter = async (req, res) => {
   try {
     const footer = await Navigation.findOne({ location: 'footer' });
+    // Return footer items (which is an object with sections)
     res.json({
       success: true,
-      data: footer?.items || []
+      data: footer?.items || {}
     });
   } catch (error) {
     res.status(500).json({
@@ -108,14 +109,29 @@ export const updateNavbar = async (req, res) => {
 // Admin: Update footer
 export const updateFooter = async (req, res) => {
   try {
-    const { items } = req.body;
+    // Footer items can be either:
+    // 1. An object with sections: { company: [...], investments: [...], resources: [...], legal: [...] }
+    // 2. An array of items
+    const items = req.body.items || req.body;
+
+    // Validate the structure
+    let footerData;
+    if (items && typeof items === 'object' && !Array.isArray(items)) {
+      // It's a sections object - store as-is
+      footerData = items;
+    } else if (Array.isArray(items)) {
+      // It's an array - convert to sections format
+      footerData = { links: items };
+    } else {
+      footerData = items;
+    }
 
     let footer = await Navigation.findOne({ location: 'footer' });
 
     if (!footer) {
-      footer = new Navigation({ location: 'footer', items });
+      footer = new Navigation({ location: 'footer', items: footerData });
     } else {
-      footer.items = items;
+      footer.items = footerData;
       footer.updatedAt = Date.now();
     }
 

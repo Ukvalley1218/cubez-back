@@ -6,7 +6,7 @@ import { sendContactEmail, sendConfirmationEmail } from '../utils/email.js';
 // @access  Public
 export const submitContact = async (req, res) => {
   try {
-    const { firstName, lastName, email, phone, message } = req.body;
+    const { firstName, lastName, email, phone, investmentAmount, message } = req.body;
 
     // Create contact record
     const contact = await Contact.create({
@@ -14,12 +14,13 @@ export const submitContact = async (req, res) => {
       lastName,
       email,
       phone,
+      investmentAmount,
       message
     });
 
     // Send notification email to admin
     try {
-      await sendContactEmail({ firstName, lastName, email, phone, message });
+      await sendContactEmail({ firstName, lastName, email, phone, investmentAmount, message });
     } catch (emailError) {
       console.error('Failed to send admin notification:', emailError);
       // Continue even if email fails

@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/seed.js"
+    "seed": "node src/seed.js",
+    "create-admin": "node src/scripts/createAdmin.js",
+    "restore-faqs": "node src/scripts/restoreFaqs.js",
+    "seed-settings": "node src/scripts/seedSettings.js",
+    "update-content": "node src/scripts/updateContentFields.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

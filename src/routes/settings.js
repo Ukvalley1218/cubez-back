@@ -3,6 +3,16 @@ import SiteSettings from '../models/SiteSettings.js';
 
 const router = express.Router();
 
+// Admin: Get all settings (MUST be before /:key route)
+router.get('/admin/list', async (req, res) => {
+  try {
+    const settings = await SiteSettings.find().sort({ group: 1, key: 1 });
+    res.json({ success: true, data: settings });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // Get all public settings
 router.get('/', async (req, res) => {
   try {
@@ -41,16 +51,6 @@ router.get('/:key', async (req, res) => {
   }
 });
 
-// Admin: Get all settings
-router.get('/admin/list', async (req, res) => {
-  try {
-    const settings = await SiteSettings.find().sort({ group: 1, key: 1 });
-    res.json({ success: true, data: settings });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-});
-
 // Admin: Create or update setting
 router.post('/admin', async (req, res) => {
   try {
@@ -73,6 +73,25 @@ router.post('/admin', async (req, res) => {
     }
 
     res.json({ success: true, data: setting });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+});
+
+// Admin: Bulk update settings
+router.post('/admin/bulk', async (req, res) => {
+  try {
+    const { settings } = req.body;
+
+    for (const { key, value } of settings) {
+      await SiteSettings.findOneAndUpdate(
+        { key },
+        { value },
+        { upsert: true }
+      );
+    }
+
+    res.json({ success: true, message: 'Settings updated successfully' });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -109,25 +128,6 @@ router.delete('/admin/:key', async (req, res) => {
     res.json({ success: true, message: 'Setting deleted successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
-  }
-});
-
-// Admin: Bulk update settings
-router.post('/admin/bulk', async (req, res) => {
-  try {
-    const { settings } = req.body;
-
-    for (const { key, value } of settings) {
-      await SiteSettings.findOneAndUpdate(
-        { key },
-        { value },
-        { upsert: true }
-      );
-    }
-
-    res.json({ success: true, message: 'Settings updated successfully' });
-  } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
   }
 });
 

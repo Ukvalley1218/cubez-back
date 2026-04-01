@@ -41,7 +41,11 @@ const allowedOrigins = [
   'http://localhost:5175',
   'http://localhost:5176',
   'http://localhost:5177',
-  process.env.FRONTEND_URL
+  'https://cubez-back.onrender.com',
+  'https://cubez-front.onrender.com',
+  'https://cubez-admin.onrender.com',
+  process.env.FRONTEND_URL,
+  process.env.BACKEND_URL
 ].filter(Boolean);
 
 app.use(cors({

@@ -25,6 +25,11 @@ const contactSchema = new mongoose.Schema({
     trim: true,
     default: ''
   },
+  investmentAmount: {
+    type: String,
+    trim: true,
+    default: ''
+  },
   message: {
     type: String,
     trim: true,

@@ -31,6 +31,10 @@ const contentSectionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  highlights: {
+    type: [String],
+    default: []
+  },
   image: {
     type: String,
     default: ''
@@ -41,6 +45,42 @@ const contentSectionSchema = new mongoose.Schema({
   },
   ctaLink: {
     type: String,
+    default: ''
+  },
+  // Dynamic section fields
+  description: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  number: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  highlight: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  percentage: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  icon: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  label: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  value: {
+    type: String,
+    trim: true,
     default: ''
   },
   order: {

@@ -26,6 +26,7 @@ export const sendContactEmail = async (contactData) => {
       <p><strong>Name:</strong> ${contactData.firstName} ${contactData.lastName}</p>
       <p><strong>Email:</strong> ${contactData.email}</p>
       <p><strong>Phone:</strong> ${contactData.phone || 'Not provided'}</p>
+      <p><strong>Investment Amount:</strong> ${contactData.investmentAmount || 'Not specified'}</p>
       <p><strong>Message:</strong></p>
       <p>${contactData.message || 'No message provided'}</p>
       <hr>
@@ -84,8 +85,46 @@ export const sendConfirmationEmail = async (email, name) => {
   return await transporter.sendMail(mailOptions);
 };
 
+// Send password reset email
+export const sendPasswordResetEmail = async (email, resetToken, name) => {
+  const transporter = createTransporter();
+
+  // In production, this should be a proper URL to your frontend reset password page
+  const resetUrl = process.env.FRONTEND_URL
+    ? `${process.env.FRONTEND_URL}/admin/reset-password?token=${resetToken}`
+    : `http://localhost:5173/admin/reset-password?token=${resetToken}`;
+
+  const mailOptions = {
+    from: process.env.SMTP_USER,
+    to: email,
+    subject: 'Password Reset - Cubez Capital Admin',
+    html: `
+      <h2>Password Reset Request</h2>
+      <p>Hello ${name || 'Admin'},</p>
+      <p>You have requested to reset your password for the Cubez Capital Admin Panel.</p>
+      <p>Click the button below to reset your password:</p>
+      <p style="margin: 20px 0;">
+        <a href="${resetUrl}" style="display: inline-block; padding: 12px 24px; background-color: #d1a549; color: #1a2a42; text-decoration: none; border-radius: 8px; font-weight: 600;">
+          Reset Password
+        </a>
+      </p>
+      <p>Or copy and paste this link into your browser:</p>
+      <p style="word-break: break-all; color: #666;">${resetUrl}</p>
+      <p><strong>This link will expire in 1 hour.</strong></p>
+      <p>If you did not request this password reset, please ignore this email.</p>
+      <hr>
+      <p>Best regards,</p>
+      <p><strong>Cubez Capital Inc.</strong></p>
+      <p><a href="https://cubezcapital.com">www.cubezcapital.com</a></p>
+    `
+  };
+
+  return await transporter.sendMail(mailOptions);
+};
+
 export default {
   sendContactEmail,
   sendInquiryEmail,
-  sendConfirmationEmail
+  sendConfirmationEmail,
+  sendPasswordResetEmail
 };
