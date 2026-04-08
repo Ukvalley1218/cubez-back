@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/seed.js",
+    "seed-content": "node src/scripts/seedContent.js",
+    "clear-db": "node src/scripts/clearDatabase.js",
     "create-admin": "node src/scripts/createAdmin.js",
     "restore-faqs": "node src/scripts/restoreFaqs.js",
     "seed-settings": "node src/scripts/seedSettings.js",

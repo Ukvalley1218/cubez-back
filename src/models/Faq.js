@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 const faqSchema = new mongoose.Schema({
   category: {
     type: String,
-    required: [true, 'Category is required'],
     enum: ['general', 'investments', 'security', 'process', 'returns'],
     default: 'general'
+    // Category is optional - all FAQs show on all pages
   },
   question: {
     type: String,
@@ -43,7 +43,7 @@ faqSchema.pre('save', function(next) {
   next();
 });
 
-// Compound index for category and order
-faqSchema.index({ category: 1, order: 1 });
+// Index for order to sort FAQs
+faqSchema.index({ order: 1 });
 
 export default mongoose.model('Faq', faqSchema);

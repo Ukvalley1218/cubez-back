@@ -21,6 +21,12 @@ import processStepsRoutes from './routes/processSteps.js';
 import settingsRoutes from './routes/settings.js';
 import uploadRoutes from './routes/upload.js';
 import navigationRoutes from './routes/navigation.js';
+import sectionGroupRoutes from './routes/sectionGroups.js';
+import fieldRoutes from './routes/fields.js';
+import sectionRoutes from './routes/sections.js';
+import assetRoutes from './routes/assets.js';
+import formConfigRoutes from './routes/formConfigs.js';
+import pageContentRoutes from './routes/pageContent.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,7 +92,13 @@ app.use('/api/benefits', benefitsRoutes);
 app.use('/api/process-steps', processStepsRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/navigation', navigationRoutes);
+app.use('/api/section-groups', sectionGroupRoutes);
+app.use('/api/fields', fieldRoutes);
+app.use('/api/sections', sectionRoutes);
 app.use('/api', uploadRoutes);
+app.use('/api/assets', assetRoutes);
+app.use('/api/form-configs', formConfigRoutes);
+app.use('/api/public', pageContentRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

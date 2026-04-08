@@ -29,6 +29,36 @@ import {
   updateFaq,
   deleteFaq
 } from '../controllers/faqController.js';
+import {
+  getAllPages,
+  createPage,
+  updatePage,
+  deletePage,
+  reorderPages
+} from '../controllers/pageController.js';
+import {
+  getAllSections,
+  createSection,
+  updateSection,
+  deleteSection,
+  reorderSections
+} from '../controllers/sectionController.js';
+import {
+  getAllFields,
+  createField,
+  batchUpdateFields,
+  updateField,
+  deleteField
+} from '../controllers/fieldController.js';
+import {
+  getAssets,
+  getAssetById,
+  uploadAsset,
+  updateAsset,
+  deleteAsset,
+  getAssetsByFolder
+} from '../controllers/assetController.js';
+import handleCloudinaryUpload from '../middleware/cloudinaryUpload.js';
 
 const router = express.Router();
 
@@ -77,5 +107,33 @@ router.get('/faqs', getAllFaqs);
 router.post('/faqs', faqValidation, validate, createFaq);
 router.put('/faqs/:id', updateFaq);
 router.delete('/faqs/:id', deleteFaq);
+
+// ===== Pages Routes =====
+router.get('/pages', getAllPages);
+router.post('/pages', createPage);
+router.put('/pages/:id', updatePage);
+router.delete('/pages/:id', deletePage);
+router.put('/pages/reorder', reorderPages);
+
+// ===== Sections Routes =====
+router.get('/sections', getAllSections);
+router.post('/sections', createSection);
+router.put('/sections/:id', updateSection);
+router.delete('/sections/:id', deleteSection);
+router.put('/sections/reorder', reorderSections);
+
+// ===== Fields Routes =====
+router.get('/fields', getAllFields);
+router.post('/fields', createField);
+router.put('/fields/batch/:sectionId', batchUpdateFields);
+router.put('/fields/:id', updateField);
+router.delete('/fields/:id', deleteField);
+
+// ===== Assets Routes =====
+router.get('/assets', getAssets);
+router.get('/assets/:id', getAssetById);
+router.post('/assets/upload', handleCloudinaryUpload, uploadAsset);
+router.put('/assets/:id', updateAsset);
+router.delete('/assets/:id', deleteAsset);
 
 export default router;

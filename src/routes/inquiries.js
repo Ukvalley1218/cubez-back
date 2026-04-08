@@ -24,9 +24,11 @@ const inquiryValidation = [
     .optional()
     .trim(),
   body('investmentAmount')
+    .optional()
     .isIn(['$50k - $100k', '$100k - $250k', '$250k - $500k', '$500k+'])
     .withMessage('Invalid investment amount'),
   body('investmentType')
+    .optional()
     .isIn(['Private Lending', 'Real Estate Equity', 'Development Financing', 'Distressed Assets', 'Not Sure Yet'])
     .withMessage('Invalid investment type'),
   body('message')

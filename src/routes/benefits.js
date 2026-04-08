@@ -1,9 +1,10 @@
 import express from 'express';
 import Benefit from '../models/Benefit.js';
+import { protect, restrictTo } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all active benefits
+// Get all active benefits (public)
 router.get('/', async (req, res) => {
   try {
     const benefits = await Benefit.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
@@ -13,8 +14,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Admin: Get all benefits
-router.get('/admin', async (req, res) => {
+// Admin: Get all benefits (protected)
+router.get('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const benefits = await Benefit.find().sort({ order: 1, createdAt: 1 });
     res.json({ success: true, data: benefits });
@@ -23,8 +24,8 @@ router.get('/admin', async (req, res) => {
   }
 });
 
-// Admin: Create benefit
-router.post('/admin', async (req, res) => {
+// Admin: Create benefit (protected)
+router.post('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const benefit = new Benefit(req.body);
     await benefit.save();
@@ -34,8 +35,8 @@ router.post('/admin', async (req, res) => {
   }
 });
 
-// Admin: Update benefit
-router.put('/admin/:id', async (req, res) => {
+// Admin: Update benefit (protected)
+router.put('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const benefit = await Benefit.findByIdAndUpdate(
       req.params.id,
@@ -53,8 +54,8 @@ router.put('/admin/:id', async (req, res) => {
   }
 });
 
-// Admin: Delete benefit
-router.delete('/admin/:id', async (req, res) => {
+// Admin: Delete benefit (protected)
+router.delete('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const benefit = await Benefit.findByIdAndDelete(req.params.id);
 

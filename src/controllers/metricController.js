@@ -5,7 +5,13 @@ const defaultMetrics = [
   { key: 'assetsUnderManagement', value: 250, suffix: 'M+', label: 'Assets Under Management' },
   { key: 'activeInvestors', value: 500, suffix: '+', label: 'Active Investors' },
   { key: 'principalLosses', value: 0, suffix: '', label: 'Principal Losses' },
-  { key: 'yearsOfExcellence', value: 12, suffix: '+', label: 'Years of Excellence' }
+  { key: 'yearsOfExcellence', value: 12, suffix: '+', label: 'Years of Excellence' },
+  // Risk Management Page metrics
+  { key: 'maxLtvRatio', value: 65, suffix: '%', label: 'Max LTV Ratio' },
+  { key: 'assetCoverage', value: 100, suffix: '%', label: 'Asset Coverage' },
+  { key: 'performancePercentage', value: 12.4, suffix: '%', label: 'Performance' },
+  { key: 'riskScore', value: 1, suffix: '', label: 'Risk Score' },
+  { key: 'yearsOfRiskManagement', value: 12, suffix: '+', label: 'Years of Risk Management' }
 ];
 
 // @desc    Get all metrics
@@ -19,6 +25,15 @@ export const getMetrics = async (req, res) => {
     if (metrics.length === 0) {
       await Metric.insertMany(defaultMetrics);
       metrics = await Metric.find({});
+    } else {
+      // Check if any new default metrics are missing and add them
+      const existingKeys = metrics.map(m => m.key);
+      const missingMetrics = defaultMetrics.filter(dm => !existingKeys.includes(dm.key));
+
+      if (missingMetrics.length > 0) {
+        await Metric.insertMany(missingMetrics);
+        metrics = await Metric.find({});
+      }
     }
 
     res.json({

@@ -27,13 +27,13 @@ const inquirySchema = new mongoose.Schema({
   },
   investmentAmount: {
     type: String,
-    required: [true, 'Investment amount is required'],
-    enum: ['$50k - $100k', '$100k - $250k', '$250k - $500k', '$500k+']
+    enum: ['$50k - $100k', '$100k - $250k', '$250k - $500k', '$500k+'],
+    default: ''
   },
   investmentType: {
     type: String,
-    required: [true, 'Investment type is required'],
-    enum: ['Private Lending', 'Real Estate Equity', 'Development Financing', 'Distressed Assets', 'Not Sure Yet']
+    enum: ['Private Lending', 'Real Estate Equity', 'Development Financing', 'Distressed Assets', 'Not Sure Yet'],
+    default: ''
   },
   message: {
     type: String,

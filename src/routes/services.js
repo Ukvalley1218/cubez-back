@@ -1,9 +1,10 @@
 import express from 'express';
 import Service from '../models/Service.js';
+import { protect, restrictTo } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all active services
+// Get all active services (public)
 router.get('/', async (req, res) => {
   try {
     const services = await Service.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
@@ -13,8 +14,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Admin: Get all services
-router.get('/admin', async (req, res) => {
+// Admin: Get all services (protected)
+router.get('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const services = await Service.find().sort({ order: 1, createdAt: 1 });
     res.json({ success: true, data: services });
@@ -23,8 +24,8 @@ router.get('/admin', async (req, res) => {
   }
 });
 
-// Admin: Create service
-router.post('/admin', async (req, res) => {
+// Admin: Create service (protected)
+router.post('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const service = new Service(req.body);
     await service.save();
@@ -34,8 +35,8 @@ router.post('/admin', async (req, res) => {
   }
 });
 
-// Admin: Update service
-router.put('/admin/:id', async (req, res) => {
+// Admin: Update service (protected)
+router.put('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const service = await Service.findByIdAndUpdate(
       req.params.id,
@@ -53,8 +54,8 @@ router.put('/admin/:id', async (req, res) => {
   }
 });
 
-// Admin: Delete service
-router.delete('/admin/:id', async (req, res) => {
+// Admin: Delete service (protected)
+router.delete('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const service = await Service.findByIdAndDelete(req.params.id);
 

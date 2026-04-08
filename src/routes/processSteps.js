@@ -1,9 +1,10 @@
 import express from 'express';
 import ProcessStep from '../models/ProcessStep.js';
+import { protect, restrictTo } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all active process steps
+// Get all active process steps (public)
 router.get('/', async (req, res) => {
   try {
     const { page } = req.query;
@@ -17,8 +18,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Admin: Get all process steps
-router.get('/admin', async (req, res) => {
+// Admin: Get all process steps (protected)
+router.get('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const steps = await ProcessStep.find().sort({ page: 1, order: 1 });
     res.json({ success: true, data: steps });
@@ -27,8 +28,8 @@ router.get('/admin', async (req, res) => {
   }
 });
 
-// Admin: Create process step
-router.post('/admin', async (req, res) => {
+// Admin: Create process step (protected)
+router.post('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const step = new ProcessStep(req.body);
     await step.save();
@@ -38,8 +39,8 @@ router.post('/admin', async (req, res) => {
   }
 });
 
-// Admin: Update process step
-router.put('/admin/:id', async (req, res) => {
+// Admin: Update process step (protected)
+router.put('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const step = await ProcessStep.findByIdAndUpdate(
       req.params.id,
@@ -57,8 +58,8 @@ router.put('/admin/:id', async (req, res) => {
   }
 });
 
-// Admin: Delete process step
-router.delete('/admin/:id', async (req, res) => {
+// Admin: Delete process step (protected)
+router.delete('/admin/:id', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
     const step = await ProcessStep.findByIdAndDelete(req.params.id);
 

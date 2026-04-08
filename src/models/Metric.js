@@ -6,7 +6,17 @@ const metricSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    enum: ['assetsUnderManagement', 'activeInvestors', 'principalLosses', 'yearsOfExcellence']
+    enum: [
+      'assetsUnderManagement',
+      'activeInvestors',
+      'principalLosses',
+      'yearsOfExcellence',
+      'maxLtvRatio',
+      'assetCoverage',
+      'performancePercentage',
+      'riskScore',
+      'yearsOfRiskManagement'
+    ]
   },
   value: {
     type: Number,

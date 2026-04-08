@@ -8,16 +8,17 @@ const siteSettingsSchema = new mongoose.Schema({
     trim: true
   },
   value: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
     required: true
   },
   type: {
     type: String,
-    enum: ['string', 'number', 'json', 'image', 'boolean'],
+    enum: ['string', 'number', 'json', 'image', 'boolean', 'color', 'url', 'email', 'phone'],
     default: 'string'
   },
   group: {
     type: String,
+    enum: ['general', 'contact', 'social', 'seo', 'appearance', 'notifications', 'integration'],
     default: 'general'
   },
   label: {
@@ -27,10 +28,22 @@ const siteSettingsSchema = new mongoose.Schema({
   description: {
     type: String,
     default: ''
+  },
+  isPublic: {
+    type: Boolean,
+    default: false
+  },
+  order: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true
 });
+
+// Index for efficient queries
+siteSettingsSchema.index({ group: 1 });
+siteSettingsSchema.index({ isPublic: 1 });
 
 const SiteSettings = mongoose.model('SiteSettings', siteSettingsSchema);
 

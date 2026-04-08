@@ -31,10 +31,10 @@ const contentSectionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  highlights: {
-    type: [String],
-    default: []
-  },
+  // highlights: {
+  //   type: [String],
+  //   default: []
+  // },
   image: {
     type: String,
     default: ''
@@ -81,6 +81,93 @@ const contentSectionSchema = new mongoose.Schema({
   value: {
     type: String,
     trim: true,
+    default: ''
+  },
+  value1: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  label1: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  value2: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  label2: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  value3: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  label3: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  image2: {
+    type: String,
+    default: ''
+  },
+  secondaryCtaText: {
+    type: String,
+    default: ''
+  },
+  secondaryCtaLink: {
+    type: String,
+    default: ''
+  },
+  percentageLabel: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  floatingBadgeValue: {
+    type: String,
+    default: ''
+  },
+  floatingBadgeLabel: {
+    type: String,
+    default: ''
+  },
+  trust1Text: {
+    type: String,
+    default: ''
+  },
+  trust2Text: {
+    type: String,
+    default: ''
+  },
+  highlight2: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  email: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  phone: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  address: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  bulletPoints: {
+    type: String,
     default: ''
   },
   order: {
