@@ -170,6 +170,10 @@ const contentSectionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  highlights: {
+    type: String,
+    default: ''
+  },
   order: {
     type: Number,
     default: 0

@@ -14,6 +14,7 @@ const defaultSettings = [
   { key: 'contact.email', value: 'invest@cubezcapital.com', type: 'string', group: 'contact', label: 'Email Address' },
   { key: 'contact.phone', value: '+1 (416) 555-0123', type: 'string', group: 'contact', label: 'Phone Number' },
   { key: 'contact.address', value: '100 King Street West, Suite 5700, Toronto, ON M5X 1C9, Canada', type: 'string', group: 'contact', label: 'Office Address' },
+  { key: 'contact.hours', value: 'Mon - Fri: 9:00 AM - 5:00 PM EST', type: 'string', group: 'contact', label: 'Business Hours' },
 
   // Company Information
   { key: 'company.name', value: 'Cubez Capital Inc.', type: 'string', group: 'company', label: 'Company Name' },
