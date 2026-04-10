@@ -174,6 +174,46 @@ const contentSectionSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  text: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  step: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  // Investment strategy fields
+  returns: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  risk: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  minInvestment: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  details: {
+    type: String,
+    default: ''
+  },
+  phase: {
+    type: String,
+    trim: true,
+    default: ''
+  },
+  layout: {
+    type: String,
+    trim: true,
+    default: 'left'
+  },
   order: {
     type: Number,
     default: 0

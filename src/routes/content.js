@@ -52,6 +52,20 @@ router.get('/admin/all', protect, restrictTo('admin', 'superadmin'), async (req,
   }
 });
 
+// Admin: Get content by key (including inactive) - must be after /admin/all
+router.get('/admin/key/:key', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
+  try {
+    const content = await ContentSection.findOne({ key: req.params.key });
+    if (!content) {
+      return res.status(404).json({ success: false, message: 'Content not found' });
+    }
+    res.json({ success: true, data: content });
+  } catch (error) {
+    console.error('❌ Error fetching content by key:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // Admin: Create content section (protected)
 router.post('/admin', protect, restrictTo('admin', 'superadmin'), async (req, res) => {
   try {
