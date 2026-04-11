@@ -50,6 +50,9 @@ const allowedOrigins = [
   'https://cubez-back.onrender.com',
   'https://cubez-front.onrender.com',
   'https://cubez-admin.onrender.com',
+  "https://node.cubez.ca",
+  "https://cubez.ca",
+  "https://admin.cubez.ca",
   process.env.FRONTEND_URL,
   process.env.BACKEND_URL
 ].filter(Boolean);

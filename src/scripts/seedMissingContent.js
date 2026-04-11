@@ -73,7 +73,7 @@ const missingContent = [
   { key: 'risk-summary-3', page: 'risk-management', section: 'summary', icon: 'document', title: 'Structured Processes', description: 'Well-defined procedures govern every aspect of investment management.', isActive: true },
   { key: 'risk-summary-4', page: 'risk-management', section: 'summary', icon: 'users', title: 'Investor-First Approach', description: 'Alignment of interests ensures our success is directly tied to investor outcomes.', isActive: true },
   // Risk CTA
-  { key: 'risk-cta', page: 'risk-management', section: 'cta', title: 'Invest with Confidence Through a Disciplined Risk Framework', content: 'Connect with Cubez Capital to explore secure, structured investment opportunities backed by careful risk management.', ctaText: 'Request Investor Package', ctaLink: '/investments', isActive: true },
+  { key: 'risk-cta', page: 'risk-management', section: 'cta', title: 'Invest with Confidence Through a Disciplined Risk Framework', content: 'Connect with Cubez Capital to explore secure, structured investment opportunities backed by careful risk management.', ctaText: 'Request Investor Package', ctaLink: '/investment-strategy', isActive: true },
 
   // Contact Page
   { key: 'contact-hero', page: 'contact', section: 'hero', title: "Let's Start a Conversation", subtitle: 'Contact Us', content: 'Ready to explore investment opportunities? Schedule a confidential consultation with our team.', isActive: true },
